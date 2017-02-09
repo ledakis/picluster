@@ -1,1 +1,1 @@
-# The picluster repository will have necessariy files for the ansible-backed raspberry pi beowulf cluster project.
+The picluster repository will have necessariy files for the ansible-backed raspberry pi beowulf cluster project.
