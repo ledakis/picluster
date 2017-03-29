@@ -2,8 +2,8 @@
 
 update_needed=0
 
-local_repo=$(git rev-parse @)
-remote_repo=$(git rev-parse origin/master)
+local_repo=$(git -C /home/pi/picluster/ rev-parse @)
+remote_repo=$(git -C /home/pi/picluster/ rev-parse origin/master)
 
 if [ $local_repo != $remote_repo ]; then
 	update_needed=1
