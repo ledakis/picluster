@@ -1,0 +1,10 @@
+[Unit]
+Description=Service module for the picluster
+Documentation=https://gitlab.com/tledakis/picluster
+
+[Service]
+Type=simple
+ExecStart=/home/pi/picluster/service.sh
+ExecStop=pkill service.sh
+StandardOutput=null
+Restart=on-failure

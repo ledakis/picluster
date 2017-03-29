@@ -1,3 +1,13 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-sudo ifconfig  | grep 'inet addr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk '{ print $1}' > ~/picluster/ip/$(cat /sys/class/net/eth0/address | tr -d ":")
+# better version without sudo from 
+# https://ubuntuforums.org/showthread.php?t=1665000&p=10346800#post10346800
+
+curr_ip="$(ip address show | awk -F '[ /]+' '/inet / && $3 != "127.0.0.1" {print $3}')"
+ip_file="/home/pi/picluster/ip/$(cat /sys/class/net/eth0/address | tr -d ":")"
+
+if [ ! -f $ip_file ]; then
+        echo $curr_ip > $ip_file
+elif [ "$curr_ip" != "$(cat $ip_file))" ]; then
+        echo $curr_ip > $ip_file
+fi

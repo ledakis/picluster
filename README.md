@@ -21,5 +21,37 @@ Directory that will contain all the variables for the individual deployment each
 File which will contain the MAC Address of the designated master node.
 On fresh repositories this file will not exist, but will generated from the first node that saves its IP in `/ip/` directory. If the file exists (either because the Pi is not the first to boot and add its IP or because the user has added the file manually) it will not be touched.
 
+###### `service.sh`
+This file is a service running at all times that configures the cluster and keeps everything updated.
+
+###### `picluster.service`
+This file will be copied to `/etc/systemd/user/` to be automatically started with the system in order the `service.sh` to start setting up the node for Ansible to get access.
+
+## Processes
+
+#### Raspberry Pi boot process
+
+After the Debian process finishes, the scripts in `/etc/rc.local` will run. In those scripts there will be initialisation procedures that will get the configuration from `/boot/picluster.conf` and parse it accordingly.
+
+The script will also copy the ssh keys to `/home/pi/.ssh/`
+
+Given there is internet connection the script will clone the git repository into `/home/pi/picluster` (now referred to as $LOCALREPODIR and add decide if it is a master and add the master file in the root of the directory. Then it will add its IP in `$LOCALREPODIR/ip/` and commit-push back.
+
+Then it will set up a process to be added as a service in the system so that it never gets killed.
+
+That service will from now on handle everything and the initial script can terminate.
+
+If the Pi is configured to be a master, it will initiate the master script.
+
+#### Master
+
+The master procedure will initially start openmpi as master node and serve ganglia on its IP address.
+
+It will wait at least 5 minutes before starting polling the git repository for changes every 30 seconds. 
+
+The service will be checking periodically for disconnected nodes using the `ansible -m ping` module and remove the failed nodes.
+
+
+
 ######
 ######
