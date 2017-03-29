@@ -27,6 +27,22 @@ This file is a service running at all times that configures the cluster and keep
 ###### `picluster.service`
 This file will be copied to `/etc/systemd/user/` to be automatically started with the system in order the `service.sh` to start setting up the node for Ansible to get access.
 
+###### `/boot/picluster/config`
+Will include (initially) the git repository address.
+Probably more configuration options in later revisions.
+
+
+###### `/boot/picluster/master`
+Exists only on the designated master sdcard/node. Will be checked by the `/node-master.sh` script.
+
+###### `/boot/picluster/priv.key`
+The private key that ought to have write access to the git repository. Otherwise nothing will work.
+This key is going to be used for regular SSH as well. It is going to be copied to `/home/pi/.ssh/id_rsa` automatically.
+
+
+###### `/boot/picluster/pub.key`
+The public key for the aforementioned private one. It is going to be copied to `/home/pi/.ssh/id_rsa.pub` automatically.
+
 ## Processes
 
 #### Raspberry Pi boot process
