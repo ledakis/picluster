@@ -1,0 +1,7 @@
+# This file initialises everything
+# It will add the cronjob that begins
+# to handle everything.
+
+# before the `exit 0` line just inject this:
+
+crontab -upi /boot/picluster/picron
