@@ -4,4 +4,8 @@
 
 # before the `exit 0` line just inject this:
 
-crontab -upi /boot/picluster/picron
+
+
+if ! crontab -upi -l | grep "run.sh" >/dev/null; then
+	crontab -upi /boot/picluster/picron
+fi
