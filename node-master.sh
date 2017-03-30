@@ -11,7 +11,9 @@ mac_addr=$(cat /sys/class/net/eth0/address | tr -d ":")
 
 if [ -f $boot_master_file ]; then
 	echo $mac_addr > /home/pi/picluster/master
-	(crontab -l ; cat /boot/picluster/mastercron) | crontab -
+	if ! crontab -upi -l | grep "masterRun.sh" >/dev/null; then
+		(crontab -upi -l ; cat /boot/picluster/mastercron) | crontab -upi -
+	fi
 fi
 
 

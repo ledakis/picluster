@@ -26,10 +26,7 @@ if [[ $PI_init_repo ]]; then
 fi
 
 if [[ $PI_check_master ]]; then
-	if [[ -f "/boot/picluster/master" ]]; then
-		bash /home/pi/picluster/node-master.sh
-		export 
-	fi
+	bash /home/pi/picluster/node-master.sh
 fi
 
 bash /home/pi/picluster/up2git.sh
