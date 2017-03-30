@@ -15,7 +15,7 @@ if [ ! -f "$PI_conffile" ]; then
 	fi
 	cp -f /boot/picluster/priv.key /home/pi/.ssh/id_rsa
 	chmod 600 /home/pi/.ssh/id_rsa
-	cp -f /boot/picluster/priv.key.pub /home/pi/.ssh/id_rsa.pub
+	cp -f /boot/picluster/pub.key /home/pi/.ssh/id_rsa.pub
 	PI_init_repo=1
 fi
 # conffile exists by now
@@ -31,7 +31,7 @@ if [[ $PI_init_repo ]]; then
 	if [[ -d /home/pi/picluster ]]; then
 		rm -rf /home/pi/picluster
 	fi
-	git clone $PI_repo_addr /home/pi/picluster
+	git clone -q $PI_repo_addr /home/pi/picluster
 fi
 
 # init master, master runs ansible scripts
