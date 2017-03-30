@@ -3,6 +3,7 @@
     apt:
       name: openmpi-bin
       state: latest
+      update_cache: yes
       
   - name: enable openmpi service at boot
     service: name=openmpi-bin enabled=yes
