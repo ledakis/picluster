@@ -15,8 +15,12 @@ if [ ! -f "$PI_conffile" ]; then
 	fi
 	cp -f /boot/picluster/priv.key /home/pi/.ssh/id_rsa
 	chmod 600 /home/pi/.ssh/id_rsa
+	cp -f /boot/picluster/ssh_config /home/pi/.ssh/config
+	chmod 644 /home/pi/.ssh/config
 	cp -f /boot/picluster/pub.key /home/pi/.ssh/id_rsa.pub
+	chmod 644 /home/pi/.ssh/id_rsa.pub
 	cp -f /boot/picluster/gitconfig /home/pi/.gitconfig
+	chmod 644 /home/pi/.gitconfig
 	PI_init_repo=1
 fi
 # conffile exists by now
