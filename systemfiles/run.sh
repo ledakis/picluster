@@ -3,6 +3,7 @@
 # init vars
 PI_check_master=1
 PI_init_repo=0
+PI_install_git=1
 
 PI_conffile=/home/pi/.piclusterrc
 
@@ -13,11 +14,17 @@ if [ ! -f "$PI_conffile" ]; then
 		mkdir /home/pi/.ssh
 	fi
 	cp -f /boot/picluster/priv.key /home/pi/.ssh/id_rsa
+	chmod 600 /home/pi/.ssh/id_rsa
 	cp -f /boot/picluster/priv.key.pub /home/pi/.ssh/id_rsa.pub
 	PI_init_repo=1
 fi
 # conffile exists by now
 source $PI_conffile
+if [[ $PI_install_git ]]; then
+	sudo apt update
+	sudo apt -y install git ansible vim
+	PI_install_git=0
+fi
 
 # init repo
 if [[ $PI_init_repo ]]; then
