@@ -6,6 +6,7 @@ PI_init_repo=0
 
 PI_conffile=/home/pi/.piclusterrc
 
+# init keys, conffile
 if [ ! -f "$PI_conffile" ]; then
 	cp -f /boot/picluster/conffile.sh $PI_conffile
 	if [[ ! -d "/home/pi/.ssh" ]]; then
@@ -18,6 +19,7 @@ fi
 # conffile exists by now
 source $PI_conffile
 
+# init repo
 if [[ $PI_init_repo ]]; then
 	if [[ -d /home/pi/picluster ]]; then
 		rm -rf /home/pi/picluster
@@ -25,10 +27,13 @@ if [[ $PI_init_repo ]]; then
 	git clone $PI_repo_addr /home/pi/picluster
 fi
 
+# init master, master runs ansible scripts
 if [[ $PI_check_master ]]; then
 	bash /home/pi/picluster/node-master.sh
 fi
 
+# ip update
 bash /home/pi/picluster/up2git.sh
 
+# by now this should end, saving vars
 export -p | grep PI_ > $PI_conffile
