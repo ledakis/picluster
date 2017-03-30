@@ -43,4 +43,5 @@ fi
 bash /home/pi/picluster/up2git.sh
 
 # by now this should end, saving vars
-export -p | grep PI_ > $PI_conffile
+export -p > $PI_conffile
+chmod -x $PI_conffile
