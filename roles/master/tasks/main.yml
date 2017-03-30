@@ -1,0 +1,13 @@
+---
+- name: start openmpi process as master
+  service: openmpi
+  state: running
+# needs to add master configuration here
+
+- name: start ganglia
+  service: ganglia
+  state: running
+
+# - name: wait for 5 minutes
+#   pause:
+#     minutes: 5

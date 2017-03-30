@@ -1,0 +1,11 @@
+---
+  - name: ensure openmpi is installed and latest
+    apt:
+      name: openmpi-bin
+      state: latest
+      
+  - name: enable openmpi service at boot
+    service: name=openmpi-bin enabled=yes
+
+  - name: restart openmpi
+    service: name=openmpi-bin state=restarted
