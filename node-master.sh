@@ -5,14 +5,13 @@
 # give 60 seconds for the master to
 # set itself up first
 
-boot_master_file="/boot/master"
+boot_master_file="/boot/picluster/master"
 mac_addr=$(cat /sys/class/net/eth0/address | tr -d ":")
 
 
 if [ -f $boot_master_file ]; then
 	echo $mac_addr > /home/pi/picluster/master
-else
-	sleep 60
+	(crontab -l ; cat /boot/picluster/mastercron) | crontab -
 fi
 
 

@@ -1,23 +1,15 @@
 #!/usr/bin/env bash
 
-#set -e
-# will immediately exit if any command fails
-
-#git -C /home/pi/picluster/ status 1>/dev/null 2>&1
-
 git -C /home/pi/picluster/ remote update
-repo_update_needed=$(./git_up2date_needed.sh)
+repo_update_needed=$(/home/pi/picluster/git_up2date_needed.sh)
 
-#if $(echo $?); then
-#	exit "This is not a valid repository!"
-#fi
 if [ $repo_update_needed ]; then
 	git -C /home/pi/picluster/ fetch origin master
 	git -C /home/pi/picluster/ reset --hard FETCH_HEAD
 	git -C /home/pi/picluster/ clean -df
 fi
 
-ip_changed=$(./ip2file.sh)
+ip_changed=$(/home/pi/picluster/ip2file.sh)
 
 if [ $ip_changed ]; then
 	git -C /home/pi/picluster/ add /home/pi/picluster/ip/$(cat /sys/class/net/eth0/address | tr -d ":")
@@ -26,5 +18,3 @@ if [ $ip_changed ]; then
 fi
 
 
-
-#sleep 10
