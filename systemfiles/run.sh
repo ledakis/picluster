@@ -3,7 +3,6 @@
 # init vars
 PI_check_master=1
 PI_init_repo=0
-PI_install_git=1
 
 PI_conffile=/home/pi/.piclusterrc
 
@@ -25,10 +24,10 @@ if [ ! -f "$PI_conffile" ]; then
 fi
 # conffile exists by now
 source $PI_conffile
-if [[ $PI_install_git ]]; then
+
+if [ ! $(which git) ]; then
 	sudo apt update
 	sudo apt -y install git ansible vim
-	PI_install_git=0
 fi
 
 # init repo
