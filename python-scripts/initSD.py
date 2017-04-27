@@ -11,10 +11,10 @@ def run(cmd=None):
 	if len(out2)>0:
 		out2=out2.split("\n")
 	else:
-		out2=[]
+		pass
 	if err:
 		sys.exit('error running command: '+err)
-	return out2
+	return out2,answer.returncode
 
 def unmount(drive):
 	cmd=None
@@ -23,7 +23,7 @@ def unmount(drive):
 	elif 'darwin' in sys.platform:
 		# TODO: have not tested this without sudo?
 		cmd='diskutil unmount /dev/%s' % drive
-	return run(cmd)
+	return run(cmd)[0]
 
 def mount(drive,folder=None):
 	if folder is None:
@@ -34,13 +34,12 @@ def mount(drive,folder=None):
 		for i in range(3):
 			try:
 				cmd='sudo mkdir %s%s'% (folder,i+1)
-				print(cmd)
 				run(cmd)
-
 				cmd='sudo mount /dev/%s%s %s%s' % (drive,i+1,folder,i+1)
-				print(cmd)
-				run(cmd)
-				mounted.append(folder+str(i+1))
+				result={'returncode':1}
+				result['result'],result['returncode']=run(cmd)
+				if result['returncode'] == 0:
+					mounted.append(folder+str(i+1))
 			except:
 				pass
 	elif 'darwin' in sys.platform:
@@ -70,7 +69,7 @@ if not sys.platform in msg.keys():
 	sys.exit('platform not supported yet')
 
 safeoptions=list()
-for line in run(drivescmd):
+for line in run(drivescmd)[0]:
 	drive=line.split("/")[-1]
 	safeoptions.append(drive)
 	print("/dev/"+drive)
@@ -94,7 +93,7 @@ print(msg)
 print()
 
 choices={}
-for number,line in enumerate(run(findcmd),start=1):
+for number,line in enumerate(run(findcmd)[0],start=1):
 	choices[number]=line
 	print(str(number)+" | "+line)
 input2=input("enter the correct number: ")
