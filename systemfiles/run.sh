@@ -31,7 +31,7 @@ if [ ! $(which git) ]; then
 fi
 
 # init repo
-if [[ $PI_init_repo ]]; then
+if [ "$PI_init_repo" -eq "1" ]; then
 	if [[ -d /home/pi/picluster ]]; then
 		rm -rf /home/pi/picluster
 	fi
