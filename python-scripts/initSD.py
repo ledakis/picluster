@@ -2,6 +2,16 @@ import subprocess, shlex
 import sys
 import os, pwd
 
+filelist={
+	'conffile.sh':'1/picluster/',
+	'gitconfig':'1/picluster/',
+	'masterRun.sh':'1/picluster/',
+	'mastercron':'1/picluster/',
+	'picron':'1/picluster/',
+	'run.sh':'1/picluster/',
+	'ssh_config':'1/picluster/',
+}
+
 def run(cmd=None):
 	if cmd is None:
 		sys.exit('wrong/no command given to run')
@@ -137,6 +147,50 @@ msg='Will now mount the sd card to write the specific scripts'
 mounted=[]
 mounted=mount(input1)
 
-print('mounted partitions:')
-for m in mounted:
-	print(m)
+if len(mounted)<2:
+	sys.exit('not all exptected mounts correctly mounted')
+
+cmd='sudo mkdir %s' % os.path.join(mounted[0],'picluster')
+run(cmd)
+for f,path in filelist.items():
+	cmd='sudo cp ../systemfiles/%s %s' % (f,mounted[0][:-1]+path)
+	run(cmd)
+
+cmd='sudo cp ../systemfiles/rc.local %s' % mounted[1]+'/etc/rc.local'
+run(cmd)
+
+contLoop=True
+inp=input('In order for the git/ssh to work, the ~/.ssh/priv.key and ~/.ssh/pub.key keys will be copied to the SD card.\nIf they are not found, the script will exit. You can create them now before the script proceeds.\nProceed? y/N: ')
+while contLoop:
+	if inp=='N' or inp=='' or inp=='n':
+		print('Exiting')
+		sys.exit(0)
+	elif inp=='y':
+		contLoop=False
+		pass
+	else:
+		inp=input('Wrong input.\nProceed? y/N: ')
+
+cmd='sudo cp ~/.ssh/priv.key %s' % mounted[0]+"/picluster/"
+run(cmd)
+cmd='sudo cp ~/.ssh/pub.key %s' % mounted[0]+"/picluster/"
+run(cmd)
+
+contLoop=True
+master=input('Is this going to be the master node? y/N: ')
+while contLoop:
+	if master=='N' or master=='' or master=='n':
+		contLoop=False
+		pass
+	elif master=='y':
+		cmd='sudo touch %s' % mounted[0]+'/picluster/master'
+		run(cmd)
+		print('\nMaster set\n')
+		contLoop=False
+	else:
+		master=input('Wrong input.\nMaster? y/N: ')
+
+
+print()
+print('SUCCESS!')
+print('You are ready!')
