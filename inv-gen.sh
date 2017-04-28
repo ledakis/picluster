@@ -12,11 +12,11 @@ echo "[master]" > $PI_local_repo_dir/inventory
 cat $PI_local_repo_dir/ip/$(cat $PI_local_repo_dir/master) 2>/dev/null >> $PI_local_repo_dir/inventory
 rm $PI_local_repo_dir/ip/$(cat $PI_local_repo_dir/master)
 
-echo "[main]" >> $PI_local_repo_dir/inventory
+echo "[nodes]" >> $PI_local_repo_dir/inventory
 cat $PI_local_repo_dir/ip/* 2>/dev/null >> $PI_local_repo_dir/inventory
 
 echo "
-[main:vars]
+[nodes:vars]
 ansible_user=root" >> $PI_local_repo_dir/inventory
 
 cp $PI_local_repo_dir/inventory /home/pi/inventory
