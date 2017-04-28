@@ -32,6 +32,10 @@ if [ ! $(which git) ]; then
 	sudo apt -y install git ansible vim
 fi
 
+if [ ! -d /home/pi/picluster ]; then
+        PI_init_repo=1
+fi
+
 # init repo
 if [ "$PI_init_repo" -eq "1" ]; then
 	if [[ -d /home/pi/picluster ]]; then
