@@ -4,11 +4,11 @@
 #sh -c '(echo [nodes]; cat /home/pi/picluster/ip/* ) 2>/dev/null ' > /home/pi/picluster/inventory
 
 #sh -c 'cat /home/pi/picluster/ip/* 2>/dev/null ' > /home/pi/picluster/inventory
-echo "[main]" > inventory
-cat ip/* 2>/dev/null >> inventory
+echo "[main]" > /home/pi/picluster/inventory
+cat ip/* 2>/dev/null >> /home/pi/picluster/inventory
 
 echo "
 [main:vars]
-ansible_user=root" >> inventory
+ansible_user=root" >> /home/pi/picluster/inventory
 
 
