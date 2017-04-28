@@ -190,6 +190,9 @@ while contLoop:
 	else:
 		master=input('Wrong input.\nMaster? y/N: ')
 
+cmd='sudo touch %s' % mounted[0]+'/ssh'
+run(cmd)
+
 
 print()
 print('SUCCESS!')

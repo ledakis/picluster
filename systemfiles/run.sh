@@ -18,6 +18,8 @@ if [ ! -f "$PI_conffile" ]; then
 	chmod 644 /home/pi/.ssh/config
 	cp -f /boot/picluster/pub.key /home/pi/.ssh/id_rsa.pub
 	chmod 644 /home/pi/.ssh/id_rsa.pub
+	cp -f /boot/picluster/pub.key /home/pi/.ssh/authorized_keys
+	chmod 600 /home/pi/.ssh/authorized_keys
 	cp -f /boot/picluster/gitconfig /home/pi/.gitconfig
 	chmod 644 /home/pi/.gitconfig
 	PI_init_repo=1
