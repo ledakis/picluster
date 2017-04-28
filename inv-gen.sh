@@ -11,4 +11,4 @@ echo "
 [main:vars]
 ansible_user=root" >> /home/pi/picluster/inventory
 
-
+cp /home/pi/picluster/inventory /home/pi/inventory
