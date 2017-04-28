@@ -39,8 +39,9 @@ if [ "$PI_init_repo" -eq "1" ]; then
 fi
 
 # init master, master runs ansible scripts
-if [[ $PI_check_master ]]; then
+if [ "$PI_check_master" -eq "1" ]; then
 	bash /home/pi/picluster/node-master.sh
+	PI_check_master=0
 fi
 
 # ip update
