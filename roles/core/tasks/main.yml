@@ -1,8 +1,8 @@
 ---
 - name: enable ssh on boot
-  service: ssh
-  state: started
-  enabled: yes
+  service: 
+    name: ssh
+    enabled: yes
 
 - name: create "manage" user
   user: 

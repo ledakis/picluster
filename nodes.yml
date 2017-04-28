@@ -1,0 +1,8 @@
+---
+- name: run base config
+  hosts: nodes
+  remote_user: pi
+  become: true
+  roles:
+    - core
+    - openmpi

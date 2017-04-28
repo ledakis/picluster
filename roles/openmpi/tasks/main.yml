@@ -1,12 +1,16 @@
 ---
-  - name: ensure openmpi is installed and latest
-    apt:
-      name: openmpi-bin
-      state: latest
-      update_cache: yes
-      
-  - name: enable openmpi service at boot
-    service: name=openmpi-bin enabled=yes
+ - name: install the required packages for OpenMPI
+   action: apt package={{item}} state=installed
+   with_items:
+   - openmpi-bin 
+   - openmpi-checkpoint
+   - openmpi-common
+   - openmpi-doc 
+   - libopenmpi-dev
 
-  - name: restart openmpi
-    service: name=openmpi-bin state=restarted
+ - name: enable openmpi service at boot
+   service: name=openmpi-bin enabled=yes
+
+  # - name: restart openmpi
+  #   service: name=openmpi-bin state=restarted
+

@@ -1,0 +1,7 @@
+---
+- hosts: master
+  user: pi
+  become: yes
+  roles:
+    - nfs
+    - openmpi
