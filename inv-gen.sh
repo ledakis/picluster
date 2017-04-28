@@ -5,7 +5,7 @@
 
 #sh -c 'cat /home/pi/picluster/ip/* 2>/dev/null ' > /home/pi/picluster/inventory
 echo "[main]" > /home/pi/picluster/inventory
-cat ip/* 2>/dev/null >> /home/pi/picluster/inventory
+cat /home/pi/picluster/ip/* 2>/dev/null >> /home/pi/picluster/inventory
 
 echo "
 [main:vars]
