@@ -1,1 +1,1 @@
-ssh pi@192.168.1.116
+ssh pi@$(cat ip/$(cat master))

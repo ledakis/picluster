@@ -4,11 +4,19 @@
 #sh -c '(echo [nodes]; cat /home/pi/picluster/ip/* ) 2>/dev/null ' > /home/pi/picluster/inventory
 
 #sh -c 'cat /home/pi/picluster/ip/* 2>/dev/null ' > /home/pi/picluster/inventory
-echo "[main]" > /home/pi/picluster/inventory
-cat /home/pi/picluster/ip/* 2>/dev/null >> /home/pi/picluster/inventory
+
+PI_conffile=/home/pi/.piclusterrc
+PI_local_repo_dir=/home/pi/picluster
+
+echo "[master]" > $PI_local_repo_dir/inventory
+cat $PI_local_repo_dir/ip/$(cat $PI_local_repo_dir/master) 2>/dev/null >> $PI_local_repo_dir/inventory
+rm $PI_local_repo_dir/ip/$(cat $PI_local_repo_dir/master)
+
+echo "[main]" >> $PI_local_repo_dir/inventory
+cat $PI_local_repo_dir/ip/* 2>/dev/null >> $PI_local_repo_dir/inventory
 
 echo "
 [main:vars]
-ansible_user=root" >> /home/pi/picluster/inventory
+ansible_user=root" >> $PI_local_repo_dir/inventory
 
-cp /home/pi/picluster/inventory /home/pi/inventory
+cp $PI_local_repo_dir/inventory /home/pi/inventory
