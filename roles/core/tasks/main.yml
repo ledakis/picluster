@@ -4,22 +4,7 @@
     name: ssh
     enabled: yes
 
-- name: create "manage" user
-  user: 
-    name: manage
-    password: picluster
-    comment: "Manage user has rights manage the whole system, and will be used by both the admin interface and openmpi"
-    groups: sudo
-    append: yes
-
-- name: inject ssh key to pi user
-  authorized_key:
-    exclusive: yes
-    user: pi
-    key: "{{ lookup('file', '/home/pi/.ssh/id_rsa') }}"
-
-- name: inject ssh key to manage user
-  authorized_key:
-    exclusive: yes
-    user: manage
-    key: "{{ lookup('file', '/home/pi/.ssh/id_rsa') }}"
+- name: update apt
+  apt: 
+    update_cache: yes
+    cache_valid_time: 3600

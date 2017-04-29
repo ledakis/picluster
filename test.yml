@@ -1,0 +1,6 @@
+---
+- hosts: master
+  user: pi
+  tasks:
+   - name: Ping
+     ping:
