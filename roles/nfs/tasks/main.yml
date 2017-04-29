@@ -10,8 +10,8 @@
 
  - name: configure nfs
    action: template src=exports.j2 dest=/etc/exports
-   vars:
-    hosts: group['nodes']
+   with_items:
+    - { hosts: group.nodes }
 
  - name: rpcbind is running
    action: service name=rpcbind state=started enabled=yes
