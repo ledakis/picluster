@@ -17,6 +17,10 @@ cat $PI_local_repo_dir/ip/* 2>/dev/null >> $PI_local_repo_dir/inventory
 
 echo "
 [nodes:vars]
-ansible_user=root" >> $PI_local_repo_dir/inventory
+ansible_user=pi
+
+[master:vars]
+ansible_ssh_user=pi
+" >> $PI_local_repo_dir/inventory
 
 cp $PI_local_repo_dir/inventory /home/pi/inventory
