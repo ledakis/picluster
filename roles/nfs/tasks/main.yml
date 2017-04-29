@@ -5,10 +5,10 @@
    - nfs-kernel-server
    - nfs-common
 
- - name: shared directory for nfs
+ - name: create shared directory for nfs
    file: path=/share state=directory mode=777 owner=root group=root
 
- - name: configure nfs
+ - name: nfs config file
    action: template src=exports.j2 dest=/etc/exports
 
  - name: rpcbind is running
