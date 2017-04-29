@@ -7,3 +7,4 @@
    - openmpi-common
    - openmpi-doc 
    - libopenmpi-dev
+   - python-mpi4py
