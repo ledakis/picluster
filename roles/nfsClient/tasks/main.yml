@@ -1,0 +1,8 @@
+---
+ - name: shared directory for nfs
+   file: path=/share state=directory mode=777 owner=root group=root
+
+ - name: exportfs
+   action: command mount {{item}}:/share /share
+   with_items:
+    - groups.master
