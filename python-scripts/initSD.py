@@ -1,9 +1,9 @@
-import subprocess, shlex
+import subprocess
 import sys
 import os, pwd
 
 filelist={
-	'conffile.sh':'1/picluster/',
+	# 'conffile.sh':'1/picluster/',
 	'gitconfig':'1/picluster/',
 	'masterRun.sh':'1/picluster/',
 	'mastercron':'1/picluster/',
@@ -70,9 +70,9 @@ findcmd="find -P ~ ! -path '*Trash*' -and -name '*raspbian*.img'"
 
 print()
 msg={
-	'main':'The list of usb mounted drives follows, please pick the one NOT ending in ',
-	'linux':'a number such as sdb1, but instead the one without it e.g: sdb',
-	'darwin':'s1/s2 and so on, but instead the one without it, e.g: disk2',
+	'main':'Check the list of usb mounted drives above, please pick the one NOT ending in ',
+	'linux':'\na number such as sdb1, but instead the one without it e.g: sdb',
+	'darwin':'\ns1/s2 and so on, but instead the one without it, e.g: disk2',
 	'main2': '\nIf you make a wrong choice the sd card will not work.'
 	}
 if not sys.platform in msg.keys():
@@ -119,11 +119,14 @@ ddcmd='sudo dd if=%s bs=4M of=%s' % (choices[input2],'/dev/'+input1)
 print()
 print('will run this:')
 print(ddcmd)
-agreed=input("do you agree? Check the command again and make sure it is correct!\n Proceed? y/N: ")
+agreed=input("""do you agree? Check the command again and make sure 
+it is correct!\n Proceed? y/N: """)
 
 if agreed =='y':
 	print('You might get asked your sudo password:')
-	print('The dd command will take a few minutes to finish depending on the size of the image and the SD card speed. You will get a confirmation when finished.')
+	print("""The dd command will take a few minutes to finish depending
+on the size of the image and the SD card speed. You will get a 
+confirmation when finished.""")
 	print('Unmounting /dev/%s'%input1)
 	unmount(input1)
 	print()
@@ -160,7 +163,10 @@ cmd='sudo cp ../systemfiles/rc.local %s' % mounted[1]+'/etc/rc.local'
 run(cmd)
 
 contLoop=True
-inp=input('In order for the git/ssh to work, the ~/.ssh/priv.key and ~/.ssh/pub.key keys will be copied to the SD card.\nIf they are not found, the script will exit. You can create them now before the script proceeds.\nProceed? y/N: ')
+inp=input("""In order for the git/ssh to work, your ~/.ssh/picluster.key 
+and ~/.ssh/picluster.key.pub keys will be copied to the SD card.\n
+If they are not found, the script will exit. You can create them 
+now before the script proceeds.\nProceed? y/N: """)
 while contLoop:
 	if inp=='N' or inp=='' or inp=='n':
 		print('Exiting')
@@ -171,9 +177,29 @@ while contLoop:
 	else:
 		inp=input('Wrong input.\nProceed? y/N: ')
 
-cmd='sudo cp ~/.ssh/priv.key %s' % mounted[0]+"/picluster/"
+cmd='sudo cp ~/.ssh/picluster.key %s' % mounted[0]+"/picluster/"
 run(cmd)
-cmd='sudo cp ~/.ssh/pub.key %s' % mounted[0]+"/picluster/"
+cmd='sudo cp ~/.ssh/picluster.key.pub %s' % mounted[0]+"/picluster/"
+run(cmd)
+
+cmd='git config --get remote.origin.url'
+
+git_repo, git_status=run(cmd)
+try:
+	git_repo=git_repo[0]
+except:
+	git_repo='Error finding the repository, please enter it manually.'
+if git_status:
+	print(git_status)
+	git_repo='Error finding the repository, please enter it manually.'
+inp=input("""Please insert the location of the repository if it is different 
+than the following or hit enter:\n%s\nEnter new value or hit Return: """%git_repo)
+if not inp=='':
+	git_repo=inp
+
+print('\nRepository to be written:')
+print(git_repo)
+cmd="echo export PI_repo_addr=%s | sudo tee %s" %(git_repo,mounted[0]+"/picluster/conffile.sh")
 run(cmd)
 
 contLoop=True
