@@ -1,20 +1,20 @@
 ---
- - name: install the required packages for OpenMPI
+ - name: install the required packages for NFS
    action: apt package={{item}} state=installed
    with_items:
    - nfs-kernel-server
    - nfs-common
 
- - name: create shared directory for nfs
+ - name: create shared directory for NFS
    file: path=/share state=directory mode=777 owner=root group=root
 
- - name: nfs config file
+ - name: NFS config file
    action: template src=exports.j2 dest=/etc/exports
 
  - name: rpcbind is running
    action: service name=rpcbind state=started enabled=yes
 
- - name: nfs is running
+ - name: NFS is running
    action: service name=nfs-kernel-server state=started enabled=yes
 
  - name: exportfs
