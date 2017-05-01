@@ -15,7 +15,7 @@ rm $PI_local_repo_dir/ip/$(cat $PI_local_repo_dir/master)
 
 echo "[nodes]" >> $PI_local_repo_dir/inventory
 cat $PI_local_repo_dir/ip/* 2>/dev/null >> $PI_local_repo_dir/inventory
-cat $PI_local_repo_dir/ip/* 2>/dev/null >> /home/pi/mpiNodes
+cat $PI_local_repo_dir/ip/* 2>/dev/null > /home/pi/mpiNodes
 
 echo "
 [nodes:vars]
