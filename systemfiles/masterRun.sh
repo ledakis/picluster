@@ -11,7 +11,7 @@ pgrep ansible > /dev/null
 sts=$?
 
 if [ $sts -ne 0 ]; then
-        ansible-playbook -i /home/pi/inventory $PI_local_repo_dir/master.yml > /home/pi/ansible.log
-        ansible-playbook -i /home/pi/inventory $PI_local_repo_dir/nodes.yml >> /home/pi/ansible.log
+        ansible-playbook -i /home/pi/ansible-inventory $PI_local_repo_dir/master.yml > /home/pi/ansible.log
+        ansible-playbook -i /home/pi/ansible-inventory $PI_local_repo_dir/nodes.yml >> /home/pi/ansible.log
 
 fi
