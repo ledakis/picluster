@@ -3,5 +3,6 @@
   user: pi
   sudo: yes
   roles:
+    - core
     - nfs
     - openmpi
