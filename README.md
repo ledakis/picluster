@@ -1,6 +1,9 @@
+## This is the repository described in my BSc thesis (link [here](https://files.ledakis.com/TheocharisLedakis-Dissertation-Picluster.pdf)):
+_An Ansible implementation of a self-configuring Beowulf cluster of Raspberry Pis in a localised environment for the purpose of distributed computing using Open MPI_
+
 The picluster repository will have the necessary files for the ansible-backed raspberry pi beowulf cluster project.
 
-#### File structure of the repository
+**File structure of the repository**
 
 ###### `/ip/`
 Contains the generated IP (individual) files for all nodes (including master).
@@ -63,11 +66,6 @@ If the Pi is configured to be a master, it will initiate the master script.
 
 The master procedure will initially start openmpi as master node and serve ganglia on its IP address.
 
-It will wait at least 5 minutes before starting polling the git repository for changes every 30 seconds. 
+It will wait at least 5 minutes before starting polling the git repository for changes every 30 seconds.
 
 The service will be checking periodically for disconnected nodes using the `ansible -m ping` module and remove the failed nodes.
-
-
-
-######
-######
